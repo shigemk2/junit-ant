@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="sample" default="dist" basedir=".">
+    <description>
+        Ant + JUnitの連携サンプル
+    </description>
+    <!-- Mainのビルドとjarファイルの作成に必要な情報 -->
+    <property name="src" location="src/main/java"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
+    <!-- MainTestのビルドに必要な情報 -->
+    <property name="test.src" location="src/test/java"/>
+    <property name="test.build" location="testbuild"/>
+    <property name="test.class.name" value="sample.MainTest" />
+    <path id="test.classpath">
+        <pathelement location="${build}" />
+        <pathelement location="${test.build}" />
+        <pathelement location="lib/junit-4.10.jar" />
+    </path>
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <mkdir dir="${build}"/>
+        <mkdir dir="${test.build}"/>
+    </target>
+    <target name="compile" depends="init" description="compile the source " >
+        <!-- Mainをビルドし、buildフォルダに出力 -->
+        <javac srcdir="${src}" destdir="${build}" includeAntRuntime="no"/>
+        <!-- MainTestをビルドし、testbuildフォルダに出力 -->
+        <javac srcdir="${test.src}" destdir="${test.build}" includeAntRuntime="no">
+            <classpath refid="test.classpath" />
+        </javac>
+    </target>
+    <target name="test" depends="compile" description="test the source " >
+        <!-- JUnitによるテストを実行 -->
+        <junit fork="yes" haltonfailure="yes">
+            <test name="${test.class.name}" />
+            <formatter type="plain" usefile="false" />
+            <classpath refid="test.classpath" />
+        </junit>
+    </target>
+    <target name="dist" depends="test" description="generate the distribution" >
+        <!-- jarファイルの出力先ディレクトリを作成 -->
+        <mkdir dir="${dist}"/>
+        <!-- sample-yyyymmdd.jarという名前でjarファイルを作成 -->
+        <jar jarfile="${dist}/sample-${DSTAMP}.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="sample.Main" />
+            </manifest>
+        </jar>
+    </target>
+    <target name="clean" description="clean up" >
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${test.build}"/>
+        <delete dir="${dist}"/>
+    </target>
+</project>
