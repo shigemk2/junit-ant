@@ -9,4 +9,9 @@ public class Main {
     public static int add(int a, int b) {
         return a + b;
     }
+
+    //引数2つを加えるだけ
+    public static double add(double a, double b) {
+        return a + b;
+    }
 }
