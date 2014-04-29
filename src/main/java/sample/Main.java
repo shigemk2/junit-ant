@@ -14,4 +14,14 @@ public class Main {
     public static double add(double a, double b) {
         return a + b;
     }
+
+    //引数2つを加えるだけ
+    public static int sub(int a, int b) {
+        return a - b;
+    }
+
+    //引数2つを加えるだけ
+    public static double sub(double a, double b) {
+        return a - b;
+    }
 }

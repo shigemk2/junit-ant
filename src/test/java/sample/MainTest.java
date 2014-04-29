@@ -12,4 +12,14 @@ public class MainTest {
     public void testAddDouble() {
         assertThat(Main.add(10.5, 4.5), is(15.0));
     }
+
+    @Test
+    public void testSubInt() {
+        assertThat(Main.sub(10, 5), is(5));
+    }
+
+    @Test
+    public void testSubDouble() {
+        assertThat(Main.sub(10.0, 5.0), is(5.0));
+    }
 }
